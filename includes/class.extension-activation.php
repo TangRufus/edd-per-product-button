@@ -18,7 +18,7 @@ if( !defined( 'ABSPATH' ) ) exit;
  */
 class EDD_Extension_Activation {
 
-    public $plugin_name, $plugin_path, $plugin_file, $has_edd, $edd_base;
+    public $per_product_button, $plugin_path, $plugin_file, $has_edd, $edd_base;
 
     /**
      * Setup the activation class
@@ -42,9 +42,9 @@ class EDD_Extension_Activation {
 
         // Set plugin name
         if( isset( $plugins[$this->plugin_path . '/' . $this->plugin_file]['Name'] ) ) {
-            $this->plugin_name = str_replace( 'Easy Digital Downloads - ', '', $plugins[$this->plugin_path . '/' . $this->plugin_file]['Name'] );
+            $this->per_product_button = str_replace( 'Easy Digital Downloads - ', '', $plugins[$this->plugin_path . '/' . $this->plugin_file]['Name'] );
         } else {
-            $this->plugin_name = __( 'This plugin', 'edd' );
+            $this->per_product_button = __( 'This plugin', 'edd' );
         }
 
         // Is EDD installed?
@@ -87,6 +87,6 @@ class EDD_Extension_Activation {
             $link = '<a href="' . $url . '">' . __( 'install it', 'edd-extension-activation' ) . '</a>';
         }
         
-        echo '<div class="error"><p>' . $this->plugin_name . sprintf( __( ' requires Easy Digital Downloads! Please %s to continue!', 'edd-extension-activation' ), $link ) . '</p></div>';
+        echo '<div class="error"><p>' . $this->per_product_button . sprintf( __( ' requires Easy Digital Downloads! Please %s to continue!', 'edd-extension-activation' ), $link ) . '</p></div>';
     }
 }
