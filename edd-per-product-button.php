@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:     Per Product Button
+ * Plugin Name:     EDD Per Product Button
  * Plugin URI:      https://www.wphuman.com
  * Description:     @todo
  * Version:         1.0.0
