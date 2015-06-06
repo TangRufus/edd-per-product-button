@@ -8,7 +8,7 @@
  * Author URI:      https://www.wphuman.com
  * Text Domain:     edd-per-product-button
  *
- * @package         EDD\PluginName
+ * @package         EDD\PerProductButton
  * @author          WP Human
  * @copyright       Copyright (c) WP Human
  *
