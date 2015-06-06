@@ -2,7 +2,7 @@
 /**
  * Plugin Name:     EDD Per Product Button
  * Plugin URI:      https://www.wphuman.com
- * Description:     @todo
+ * Description:     Setup custom button text for each product.
  * Version:         1.0.0
  * Author:          WP Human
  * Author URI:      https://www.wphuman.com
@@ -81,15 +81,6 @@ if( !class_exists( 'EDD_Per_Product_Button' ) ) {
 		 * @return      void
 		 */
 		private function includes() {
-			// Include scripts
-
-			/**
-			 * @todo        The following files are not included in the boilerplate, but
-			 *              the referenced locations are listed for the purpose of ensuring
-			 *              path standardization in EDD extensions. Uncomment any that are
-			 *              relevant to your extension, and remove the rest.
-			 */
-			// require_once EDD_PER_PRODUCT_BUTTON_DIR . 'includes/shortcodes.php';
 			// require_once EDD_PER_PRODUCT_BUTTON_DIR . 'includes/widgets.php';
 		}
 
@@ -178,10 +169,6 @@ if( !class_exists( 'EDD_Per_Product_Button' ) ) {
  * @since       1.0.0
  * @return      \EDD_Per_Product_Button The one true EDD_Per_Product_Button
  *
- * @todo        Inclusion of the activation code below isn't mandatory, but
- *              can prevent any number of errors, including fatal errors, in
- *              situations where your extension is activated but EDD is not
- *              present.
  */
 function EDD_Per_Product_Button_load() {
 	if( ! class_exists( 'Easy_Digital_Downloads' ) ) {
