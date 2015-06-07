@@ -81,7 +81,7 @@ if( !class_exists( 'EDD_Per_Product_Button' ) ) {
 		 * @return      void
 		 */
 		private function includes() {
-			// require_once EDD_PER_PRODUCT_BUTTON_DIR . 'includes/widgets.php';
+			require_once EDD_PER_PRODUCT_BUTTON_DIR . 'includes/class-per-product-button-admin.php';
 		}
 
 
@@ -102,6 +102,17 @@ if( !class_exists( 'EDD_Per_Product_Button' ) ) {
 			if( class_exists( 'EDD_License' ) ) {
 				$license = new EDD_License( __FILE__, 'Per Product Button', EDD_PER_PRODUCT_BUTTON_VER, 'WP Human' );
 			}
+
+			// Admin class
+			$admin = new EDD_Per_Product_Button_Admin();
+			add_action( 'edd_meta_box_fields', array( $admin, 'meta_box_fields' ), 100 );
+
+			add_filter( 'edd_metabox_fields_save', array( $admin, 'metabox_fields_save' ) );
+
+			add_filter( 'edd_metabox_save__edd_per_product_button_text', array( $admin, 'sanitize_button_text' ) );
+			add_filter( 'edd_metabox_save__edd_per_product_button_style', array( $admin, 'sanitize_button_style' ) );
+			add_filter( 'edd_metabox_save__edd_per_product_button_color', array( $admin, 'sanitize_button_color' ) );
+
 		}
 
 
