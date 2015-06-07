@@ -13,7 +13,7 @@ if( !defined( 'ABSPATH' ) ) exit;
 
 
 /**
-* Per Product Button admin class
+* The public-facing functionality of the plugin.
 *
 * @since       1.0.0
 */
