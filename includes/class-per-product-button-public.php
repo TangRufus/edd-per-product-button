@@ -19,7 +19,6 @@ if( !defined( 'ABSPATH' ) ) exit;
 */
 
 class EDD_Per_Product_Button_Public {
-
 	/**
 	* Change the button text, style and color
 	*
@@ -28,7 +27,7 @@ class EDD_Per_Product_Button_Public {
 
 	* @since 1.0.0
 	*/
-	public function purchase_link_args( $args ) {
+	public function purchase_link_defaults( $args ) {
 
 		$post_id = $args['download_id'];
 		$text = get_post_meta( $post_id, '_edd_per_product_button_text', true );
@@ -48,5 +47,28 @@ class EDD_Per_Product_Button_Public {
 		}
 
 		return $args;
+
 	}
+
+	/**
+	* If force override is set, change the button text, style and color
+	*
+	* @param 	array 	$args 	Default arguments for display
+	* @return 	string 			Sanitized user input
+
+	* @since 1.0.0
+	*/
+	public function purchase_link_args( $args ) {
+		$post_id = $args['download_id'];
+		$should_force_override = get_post_meta( $post_id, '_edd_per_product_button_force_override', true );
+
+		// Early quit if force override not set
+		if ( $should_force_override != '1' ) {
+			return $args;
+		}
+
+		return $this->purchase_link_defaults( $args );
+
+	}
+
 }

@@ -30,55 +30,61 @@ class EDD_Per_Product_Button_Admin {
 	*/
 	public function meta_box_fields( $post_id ) {
 
-		$edd_per_product_button_text = get_post_meta( $post_id, '_edd_per_product_button_text', true );
-		$edd_per_product_button_style = get_post_meta( $post_id, '_edd_per_product_button_style', true );
-		$edd_per_product_button_color = get_post_meta( $post_id, '_edd_per_product_button_color', true );
+		$saved_text = get_post_meta( $post_id, '_edd_per_product_button_text', true );
+		$saved_force_override = get_post_meta( $post_id, '_edd_per_product_button_force_override', true );
+		$saved_style = get_post_meta( $post_id, '_edd_per_product_button_style', true );
+		$saved_color = get_post_meta( $post_id, '_edd_per_product_button_color', true );
 
 		$colors = edd_get_button_colors();
 		?>
 
 		<p><strong><?php _e( 'Per Product Button:', 'edd-external-product' ); ?></strong></p>
-
-		<table class="widefat" width="100%" cellpadding="0" cellspacing="0">
-			<thead>
-				<tr>
-					<th>Add to Cart Text</th>
-					<th>Style</th>
-					<th>Color</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>
-						<input type="text" name="_edd_per_product_button_text" id="edd_per_product_button_text" value="<?php echo esc_attr( $edd_per_product_button_text ); ?>" placeholder="Add to Cart"/>
-					</td>
-					<td>
-						<select id="edd_per_product_button_style" name="_edd_per_product_button_style">
-							<option value=""><?php _e( 'Use default style', 'edd' ); ?></option>
-							<option value="button" <?php selected( $edd_per_product_button_style, "button" ) ?> >button</option>
-							<option value="text link"  <?php selected( $edd_per_product_button_style, "text link" ) ?> >text link</option>
-						</select>
-					</td>
-					<td>
-						<?php
-						if( $colors ) {
-							?>
-							<select id="edd_per_product_button_color" name="_edd_per_product_button_color">
-								<option value="">
-									<?php _e('Use default button color', 'edd'); ?>
-								</option>
-								<?php
-								foreach ( $colors as $key => $color ) {
-									$color_val = str_replace( ' ', '_', $key );
-									echo '<option value="' . $color_val . '"' . selected( $edd_per_product_button_color, $color_val ) . '>' . $color['label'] . '</option>';
-								}
-								?>
-							</select>
-							<?php } ?>
-						</td>
+		<div id="edd_per_product_button_fields">
+			<table class="widefat" width="100%" cellpadding="0" cellspacing="0">
+				<thead>
+					<tr>
+						<th style="max-width: 25%;">Add to Cart Text</th>
+						<th>Force Override ?</th>
+						<th>Style</th>
+						<th>Color</th>
 					</tr>
-				</tbody>
-			</table>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="max-width: 25%;">
+							<input type="text" name="_edd_per_product_button_text" id="edd_per_product_button_text" class="large-text" value="<?php echo esc_attr( $saved_text ); ?>" placeholder="Add to Cart"/>
+						</td>
+						<td>
+							<input type="checkbox" name="_edd_per_product_button_force_override" id="edd_per_product_button_force_override" value="1" <?php checked( $saved_force_override, '1' ); ?>/>
+						</td>
+						<td>
+							<select id="edd_per_product_button_style" name="_edd_per_product_button_style" class="edd-select">
+								<option value=""><?php _e( 'Default', 'edd' ); ?></option>
+								<option value="button" <?php selected( $saved_style, "button" ) ?> >button</option>
+								<option value="text link"  <?php selected( $saved_style, "text link" ) ?> >text link</option>
+							</select>
+						</td>
+						<td>
+							<?php
+							if( $colors ) {
+								?>
+								<select id="edd_per_product_button_color" name="_edd_per_product_button_color" class="edd-select">
+									<option value="">
+										<?php _e('Default', 'edd'); ?>
+									</option>
+									<?php
+									foreach ( $colors as $key => $color ) {
+										$color_val = str_replace( ' ', '_', $key );
+										echo '<option value="' . $color_val . '"' . selected( $saved_color, $color_val ) . '>' . $color['label'] . '</option>';
+									}
+									?>
+								</select>
+								<?php } ?>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 
 			<?php _e( 'The add to cart text for this pictacular product', 'edd-external-product' ); ?>
 
@@ -110,6 +116,7 @@ class EDD_Per_Product_Button_Admin {
 
 			// Add our fields
 			$fields[] = '_edd_per_product_button_text';
+			$fields[] = '_edd_per_product_button_force_override';
 			$fields[] = '_edd_per_product_button_style';
 			$fields[] = '_edd_per_product_button_color';
 
@@ -128,6 +135,24 @@ class EDD_Per_Product_Button_Admin {
 		public function sanitize_button_text( $input ) {
 
 			return sanitize_text_field( $input );
+
+		}
+
+		/**
+		* Sanitize button force override
+		*
+		* @param  string $input	User input
+		* @return string 		Sanitized user input
+
+		* @since 1.0.0
+		*/
+		public function sanitize_button_force_override( $input ) {
+
+			if ( $input != '1' ) {
+				$input = null;
+			}
+
+			return $input;
 
 		}
 

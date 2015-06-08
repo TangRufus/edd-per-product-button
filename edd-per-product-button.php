@@ -106,13 +106,15 @@ if( !class_exists( 'EDD_Per_Product_Button' ) ) {
 
 			// Public class
 			$public = new EDD_Per_Product_Button_Public();
-			add_filter( 'edd_purchase_link_defaults', array( $public, 'purchase_link_args' ) );
+			add_filter( 'edd_purchase_link_defaults', array( $public, 'purchase_link_defaults' ) );
+			add_filter( 'edd_purchase_link_args', array( $public, 'purchase_link_args' ), 5000 );
 
 			// Admin class
 			$admin = new EDD_Per_Product_Button_Admin();
 			add_action( 'edd_meta_box_fields', array( $admin, 'meta_box_fields' ), 100 );
 			add_filter( 'edd_metabox_fields_save', array( $admin, 'metabox_fields_save' ) );
 			add_filter( 'edd_metabox_save__edd_per_product_button_text', array( $admin, 'sanitize_button_text' ) );
+			add_filter( 'edd_metabox_save__edd_per_product_button_force_override', array( $admin, 'sanitize_button_force_override' ) );
 			add_filter( 'edd_metabox_save__edd_per_product_button_style', array( $admin, 'sanitize_button_style' ) );
 			add_filter( 'edd_metabox_save__edd_per_product_button_color', array( $admin, 'sanitize_button_color' ) );
 
